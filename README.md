@@ -16,19 +16,19 @@
 To run the dev server for your app, use:
 
 ```sh
-npx nx serve mono-calendar
+npx nx serve calendar-api
 ```
 
 To create a production bundle:
 
 ```sh
-npx nx build mono-calendar
+npx nx build calendar-api
 ```
 
 To see all available targets to run for a project, run:
 
 ```sh
-npx nx show project mono-calendar
+npx nx show project calendar-api
 ```
 
 These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.

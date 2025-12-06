@@ -1,0 +1,184 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-cluster
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB} # База по умолчанию (нужна для инициализации)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d # ← Скрипты инициализации
+    ports:
+      - "5431:5432"
+    networks:
+      - app-network
+
+  minio:
+    image: minio/minio:latest
+    container_name: calendar-minio
+    ports:
+      - "9000:9000"    # API
+      - "9001:9001"    # Web Console
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_USER}
+    volumes:
+      - ./minio-data:/data
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  redis:
+    image: redis:8.2.2
+    container_name: calendar-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 10
+    networks:
+      - app-network
+
+  common-redis:
+    image: redis:8.2.2
+    container_name: calendar-common-redis
+    restart: always
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_common_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 10
+    networks:
+      - app-network
+
+  rmq:
+    image: rabbitmq:3-management
+    container_name: calendar-rmq
+    restart: always
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - app-network
+
+  account-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.nx
+      args:
+        APP_NAME: account
+    container_name: account-service
+    restart: always
+    ports:
+      - "3004:3000"
+    environment:
+      - NODE_ENV=production
+      - ACCOUNT_PORT=3000
+    depends_on:
+      - postgres
+      - rmq
+      - common-redis
+      - redis
+    networks:
+      - app-network
+
+  # Микросервис календаря
+  calendar-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.nx
+      args:
+        APP_NAME: calendar
+    container_name: calendar-service
+    restart: always
+    ports:
+      - "3005:3000"
+    environment:
+      - NODE_ENV=production
+      - CALENDAR_PORT=3000
+    depends_on:
+      - postgres
+      - rmq
+    networks:
+      - app-network
+
+  notification-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.without-prisma.nx
+      args:
+        APP_NAME: notification
+    container_name: notification-service
+    restart: always
+    ports:
+      - "3006:3000"
+    environment:
+      - NODE_ENV=production
+      - NOTIFICATION_PORT=3000
+    depends_on:
+      - rmq
+    networks:
+      - app-network
+
+  files-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.without-prisma.nx
+      args:
+        APP_NAME: files
+    container_name: files-service
+    restart: always
+    ports:
+      - "3007:3000"
+    environment:
+      - NODE_ENV=production
+      - FILES_PORT=3000
+    depends_on:
+      - rmq
+      - minio
+    networks:
+      - app-network
+      
+
+  # API Gateway
+  main-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.without-prisma.nx
+      args:
+        APP_NAME: main-api
+    container_name: main-api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    depends_on:
+      - account-service
+      - calendar-service
+      - files-service
+      - notification-service
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  redis_common_data:
+
+networks:
+  app-network:
+    driver: bridge

@@ -38,7 +38,13 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/mono-calendar-e2e/**/*"]
+      "exclude": [
+        "apps/main-api-e2e/**/*",
+        "apps/account-e2e/**/*",
+        "apps/notification-e2e/**/*",
+        "apps/calendar-e2e/**/*",
+        "apps/files-e2e/**/*"
+      ]
     }
   ]
 }

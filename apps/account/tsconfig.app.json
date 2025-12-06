@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "module": "commonjs",
+    "types": ["node"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "es2021"
+  },
+  "include": [
+    "src/**/*.ts",
+    "../../libs/dto/src/lib/confirm-email.dto.ts",
+    "../../libs/dto/src/lib/jwt-payload.dto.ts",
+    "../../libs/dto/src/lib/login.dto.ts",
+    "../../libs/dto/src/lib/refresh-token.dto.ts",
+    "../../libs/dto/src/lib/register.dto.ts"
+  ],
+  "exclude": ["jest.config.ts", "jest.config.cts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+}

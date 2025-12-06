@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/app/prisma/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Task {
+  id       String @id @default(uuid())
+  authorId String
+
+  title       String
+  description String?
+  address     String?
+  startDate   DateTime
+  endDate     DateTime?
+  color       String?
+
+  categories TaskCategory[]
+  shares     TaskShare[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([authorId, startDate])
+}
+
+model TaskCategory {
+  taskId     String
+  categoryId String
+  priority   Int      @default(0)
+  task       Task     @relation(fields: [taskId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([taskId, categoryId])
+}
+
+model Category {
+  id       String  @id @default(uuid())
+  name     String
+  isSystem Boolean
+
+  userId String?
+  tasks  TaskCategory[]
+  color  CategoryColor[]
+
+  @@unique([userId, name])
+  @@index([isSystem])
+  @@index([userId])
+}
+
+model CategoryColor {
+  userId        String
+  categoryId    String
+  color         String
+
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([userId, categoryId])
+  @@index([userId])
+}
+
+model CalendarView {
+  userId String
+  taskId String
+
+  authorId String
+  isShared Boolean
+
+  title     String
+  address   String?
+  startDate DateTime
+  endDate   DateTime?
+  color     String?
+
+  category1Id     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@id([userId, taskId])
+  @@index([userId, startDate])
+}
+
+model UserCash {
+  id        String   @id
+  email     String   @unique
+  name      String
+  avatarUrl String?
+  updateAt  DateTime @updatedAt
+}
+
+model TaskShare {
+  sharedWithUserId String
+  taskId           String
+  permission       String @default("read")
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@id([sharedWithUserId, taskId])
+}
+
+model OutboxEvent {
+  id      String @id @default(uuid())
+  topic    String
+  payload Json
+
+  createdAt DateTime @default(now())
+  processed Boolean  @default(false)
+
+  @@index([processed, createdAt])
+}

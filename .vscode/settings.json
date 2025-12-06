@@ -1,0 +1,45 @@
+{
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.organizeImports": "never"
+  },
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "errorLens.enabled": true,
+  "errorLens.gutterIconsEnabled": true,
+  "errorLens.statusBarMessageEnabled": true,
+  "typescript.tsserver.watchOptions": {
+    "watchFile": "useFsEvents",
+    "watchDirectory": "useFsEvents",
+    "synchronousWatchDirectory": true,
+    "fallbackPolling": "dynamicPriorityPolling",
+    "excludeDirectories": ["**/node_modules", "**/.git"]
+  },
+  "typescript.tsserver.maxTsServerMemory": 8192,
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "eslint.enable": true,
+  "eslint.lintTask.enable": false,
+  "eslint.probe": ["typescript", "typescriptreact", "javascript", "javascriptreact"],
+  "eslint.validate": ["typescript", "typescriptreact", "javascript", "javascriptreact"],
+  "eslint.workingDirectories": ["${workspaceFolder}"],
+  "eslint.options": {
+    "overrideConfigFile": "eslint.config.mjs"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true,
+  // ----------------
+}

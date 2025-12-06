@@ -1,0 +1,45 @@
+# Stage 1: Build
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Установка зависимостей
+COPY package*.json ./
+COPY nx.json ./
+COPY tsconfig.base.json ./
+RUN npm ci --only=production
+
+# Копируем весь проект
+COPY . .
+
+# Собираем конкретный микросервис (передаётся через --build-arg)
+ARG APP_NAME
+RUN npx nx build $APP_NAME --configuration=production
+
+# Stage 2: Production
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+# Устанавливаем только production-зависимости
+COPY package*.json ./
+RUN npm ci --only=production --ignore-scripts && npm cache clean --force
+
+# Копируем собранный микросервис
+ARG APP_NAME
+COPY --from=builder /app/dist/apps/$APP_NAME ./dist
+
+# Копируем только необходимые файлы для запуска
+COPY --from=builder /app/node_modules ./node_modules
+
+# 👈 Копируем prisma-схему из apps/$APP_NAME/prisma/
+COPY apps/$APP_NAME/prisma ./prisma
+COPY apps/$APP_NAME/prisma.config.ts ./prisma.config.ts
+
+COPY envs ./envs
+
+# Порт (настройте под ваш сервис)
+EXPOSE 3000
+
+# Запуск
+CMD ["node", "dist/main.js"]
