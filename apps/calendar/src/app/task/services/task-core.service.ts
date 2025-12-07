@@ -91,6 +91,7 @@ export class TaskCoreService {
       if (!time || time.status === CalculateState.FAILED) {
         const date = new Date();
         date.setHours(date.getHours() + 24);
+        date.setMinutes(0);
         taskEntity.startDate = date;
         taskEntity.endDate = null;
       } else {

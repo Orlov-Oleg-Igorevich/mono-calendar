@@ -10,6 +10,7 @@ import {
 } from '@mono-calendar/interface';
 import { TASK_NOT_FOUND_ERROR } from '../constans/task-error.constans';
 import { ChangeTaskEvent, CreateTaskEvent, DeleteTaskEvent } from '@mono-calendar/contracts';
+import { join, sql } from '../../prisma/generated/prisma/internal/prismaNamespace';
 
 @Injectable()
 export class TaskRepository {
@@ -65,6 +66,24 @@ export class TaskRepository {
       if (categoryChanges.toAdd.length > 0) {
         await tx.taskCategory.createMany({
           data: categoryChanges.toAdd.map((category) => ({
+            taskId: task.id,
+            categoryId: category.categoryId,
+            priority: category.priority,
+          })),
+        });
+      }
+      if (categoryChanges.toPriorityChanges.length > 0) {
+        await tx.$executeRaw`
+          UPDATE "TaskCategory"
+          SET "priority" = updates."priority"
+          FROM (VALUES
+            ${join(categoryChanges.toPriorityChanges.map((u) => sql`(${task.id}, ${u.categoryId}, ${u.priority})`))}
+          ) AS updates("taskId", "categoryId", "priority")
+          WHERE "TaskCategory"."taskId" = updates."taskId"
+          AND "TaskCategory"."categoryId" = updates."categoryId"
+        `;
+        await tx.taskCategory.updateMany({
+          data: categoryChanges.toPriorityChanges.map((category) => ({
             taskId: task.id,
             categoryId: category.categoryId,
             priority: category.priority,

@@ -13,7 +13,7 @@ export class TaskEntity implements ITask {
   color: string | null;
   private _categories: ITaskCategory[];
   private _shares: ITaskShare[];
-  private _originalCategories: string[] = []; //  исходные ID
+  private _originalCategories: ITaskCategory[] = []; //  исходные ID
   private _originalShares: string[] = []; //  исходные ID
 
   get categories(): ITaskCategory[] {
@@ -54,7 +54,7 @@ export class TaskEntity implements ITask {
     this.color = task.color;
     this._categories = task.categories;
     this._shares = task.shares;
-    this._originalCategories = task.categories.map((cat) => cat.categoryId);
+    this._originalCategories = task.categories;
     this._originalShares = task.shares.map((share) => share.sharedWithUserId);
   }
 
@@ -98,14 +98,23 @@ export class TaskEntity implements ITask {
   getCategoriesChanges(): {
     toAdd: ITaskCategory[];
     toRemove: string[];
+    toPriorityChanges: ITaskCategory[];
   } {
     const toAdd = this._categories.filter(
-      (cat) => !this._originalCategories.find((origCatId) => origCatId === cat.categoryId),
+      (cat) => !this._originalCategories.find((origCat) => origCat.categoryId === cat.categoryId),
     );
-    const toRemove = this._originalCategories.filter(
-      (origCatId) => !this._categories.find((cat) => cat.categoryId === origCatId),
+    const toRemoveTasks = this._originalCategories.filter(
+      (origCat) => !this._categories.find((cat) => cat.categoryId === origCat.categoryId),
     );
-    return { toAdd, toRemove };
+    const toPriorityChanges = this._categories.filter((category) =>
+      this._originalCategories.find(
+        (originalCategory) =>
+          category.categoryId === originalCategory.categoryId &&
+          category.priority !== originalCategory.priority,
+      ),
+    );
+    const toRemove = toRemoveTasks.map((toRemoveTask) => toRemoveTask.categoryId);
+    return { toAdd, toRemove, toPriorityChanges };
   }
 
   /**

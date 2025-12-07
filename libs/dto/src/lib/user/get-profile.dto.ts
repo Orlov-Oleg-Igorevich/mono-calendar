@@ -1,4 +1,4 @@
-import { RequestType } from '@mono-calendar/interface';
+import { IUserViewModel, RequestType } from '@mono-calendar/interface';
 
 export namespace GetProfileDto {
   export const topic = '';
@@ -6,7 +6,8 @@ export namespace GetProfileDto {
   export const requestType = RequestType.GET;
 
   export class Request {}
-  export class Response {
+  export class Response implements IUserViewModel {
+    id: string;
     email: string;
     name: string;
     avatarUrl: string | null;

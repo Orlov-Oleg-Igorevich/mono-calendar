@@ -67,7 +67,7 @@ export namespace ChangeTaskDto {
     @MinLength(4)
     @MaxLength(7)
     @Matches(/^#([0-9a-f]{6}|[0-9a-f]{3})$/)
-    color?: string;
+    color?: string | null;
 
     @IsOptional()
     @IsArray()
