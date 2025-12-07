@@ -7,6 +7,6 @@ export namespace GetCategoriesDto {
 
   export class Request {}
   export class Response {
-    categories: (ICategoryViewModel & Pick<IColorViewModel, 'color' | 'userId'>)[];
+    categories: (ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[];
   }
 }

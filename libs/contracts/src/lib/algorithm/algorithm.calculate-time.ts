@@ -13,6 +13,7 @@ export namespace AlgorithmCalculateTime {
     busyTimes: { startDate: Date; endDate: Date | null }[];
     durationInMinutes: number;
     onTheStreet: boolean;
+    additionalSettings?: string;
   }
   export class Response {
     @Transform(({ value }) => {

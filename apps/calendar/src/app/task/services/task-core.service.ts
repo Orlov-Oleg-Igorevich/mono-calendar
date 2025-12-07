@@ -72,7 +72,7 @@ export class TaskCoreService {
       calculateTime = res2.timeInMinutes;
     }
 
-    // Запускаем алгоритм Влада
+    // Запускаем алгоритм Никиты
     if (isNaN(taskEntity.startDate.getTime())) {
       const startDateFrom = new Date();
       const startDateTo = new Date();
@@ -87,6 +87,7 @@ export class TaskCoreService {
         onTheStreet: onTheStreet!,
         durationInMinutes: calculateTime!,
         busyTimes: slots,
+        additionalSettings: taskFields.additionalSettings,
       });
       if (!time || time.status === CalculateState.FAILED) {
         const date = new Date();

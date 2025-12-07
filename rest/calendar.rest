@@ -1,58 +1,46 @@
-POST http://localhost:3000/api/account/register HTTP/1.1
-Content-Type: application/json
-
-{
-  "email": "oleg_orlov_2005@mail.ru",
-  "password": "izvara32"
-}
-
-###
 GET http://localhost:3000/api/calendar HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTIxMzdkMy1lMGE2LTQ5YTQtODAzYi0yOTIwNmY4NjU3Y2QiLCJlbWFpbCI6Im9sZWdfb3Jsb3ZfMjAwNUBtYWlsLnJ1IiwiZXhwIjoxNzY0ODgyMDQ2LCJpYXQiOjE3NjQ4NzQ4NDZ9.CmM79zX3c-TPQyYL2HzSmOLFgMb-SUgm73kBLDv_wMY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE0NTI4MSwiaWF0IjoxNzY1MTM4MDgxfQ.2Y2Q-DAppnZJ1UvfVcKai7jHaq4VswejRJxkQTTIK58
 
 ###
 GET http://localhost:3000/api/calendar/categories HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTIxMzdkMy1lMGE2LTQ5YTQtODAzYi0yOTIwNmY4NjU3Y2QiLCJlbWFpbCI6Im9sZWdfb3Jsb3ZfMjAwNUBtYWlsLnJ1IiwiZXhwIjoxNzY0ODgyMDQ2LCJpYXQiOjE3NjQ4NzQ4NDZ9.CmM79zX3c-TPQyYL2HzSmOLFgMb-SUgm73kBLDv_wMY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE0NTI4MSwiaWF0IjoxNzY1MTM4MDgxfQ.2Y2Q-DAppnZJ1UvfVcKai7jHaq4VswejRJxkQTTIK58
 
 ###
 POST http://localhost:3000/api/calendar HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTIxMzdkMy1lMGE2LTQ5YTQtODAzYi0yOTIwNmY4NjU3Y2QiLCJlbWFpbCI6Im9sZWdfb3Jsb3ZfMjAwNUBtYWlsLnJ1IiwiZXhwIjoxNzY0OTU5MjEwLCJpYXQiOjE3NjQ5NTIwMTB9.a_ugXYkAltF79-kwYzX-Q8lQ5FL7D1_Ik17n5RmYKVQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE0NTI4MSwiaWF0IjoxNzY1MTM4MDgxfQ.2Y2Q-DAppnZJ1UvfVcKai7jHaq4VswejRJxkQTTIK58
 Content-Type: application/json
 
 {
   "title": "Моя первая задача"
 }
 
-###
-GET http://localhost:3000/api/calendar HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTIxMzdkMy1lMGE2LTQ5YTQtODAzYi0yOTIwNmY4NjU3Y2QiLCJlbWFpbCI6Im9sZWdfb3Jsb3ZfMjAwNUBtYWlsLnJ1IiwiZXhwIjoxNzY0OTU5MjEwLCJpYXQiOjE3NjQ5NTIwMTB9.a_ugXYkAltF79-kwYzX-Q8lQ5FL7D1_Ik17n5RmYKVQ
 
 ###
-GET http://localhost:3000/api/calendar/5f4328d7-ab17-430b-a5ad-3b2e34c943b3 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTIxMzdkMy1lMGE2LTQ5YTQtODAzYi0yOTIwNmY4NjU3Y2QiLCJlbWFpbCI6Im9sZWdfb3Jsb3ZfMjAwNUBtYWlsLnJ1IiwiZXhwIjoxNzY0OTU5MjEwLCJpYXQiOjE3NjQ5NTIwMTB9.a_ugXYkAltF79-kwYzX-Q8lQ5FL7D1_Ik17n5RmYKVQ
+GET http://localhost:3000/api/calendar/f1a26b12-67f8-4266-ad45-f4b6e95002bc HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE0NTI4MSwiaWF0IjoxNzY1MTM4MDgxfQ.2Y2Q-DAppnZJ1UvfVcKai7jHaq4VswejRJxkQTTIK58
 
 
 ###
-PATCH http://localhost:3000/api/calendar/5f4328d7-ab17-430b-a5ad-3b2e34c943b3 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTIxMzdkMy1lMGE2LTQ5YTQtODAzYi0yOTIwNmY4NjU3Y2QiLCJlbWFpbCI6Im9sZWdfb3Jsb3ZfMjAwNUBtYWlsLnJ1IiwiZXhwIjoxNzY0OTU5MjEwLCJpYXQiOjE3NjQ5NTIwMTB9.a_ugXYkAltF79-kwYzX-Q8lQ5FL7D1_Ik17n5RmYKVQ
+PATCH http://localhost:3000/api/calendar/f1a26b12-67f8-4266-ad45-f4b6e95002bc HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE0NTI4MSwiaWF0IjoxNzY1MTM4MDgxfQ.2Y2Q-DAppnZJ1UvfVcKai7jHaq4VswejRJxkQTTIK58
 Content-Type: application/json
 
 {
-  "shares": []
+  "categories": [{"categoryId": "fd9d5ed6-4e27-4c17-a966-f65a2443566c", "priority": 2}]
 
 }
 
 ###
-DELETE  http://localhost:3000/api/calendar/befb4488-b2fd-4b96-9a84-e39d304dcd47 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTIxMzdkMy1lMGE2LTQ5YTQtODAzYi0yOTIwNmY4NjU3Y2QiLCJlbWFpbCI6Im9sZWdfb3Jsb3ZfMjAwNUBtYWlsLnJ1IiwiZXhwIjoxNzY0OTU5MjEwLCJpYXQiOjE3NjQ5NTIwMTB9.a_ugXYkAltF79-kwYzX-Q8lQ5FL7D1_Ik17n5RmYKVQ
+DELETE  http://localhost:3000/api/calendar/f1a26b12-67f8-4266-ad45-f4b6e95002bc HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE0NTI4MSwiaWF0IjoxNzY1MTM4MDgxfQ.2Y2Q-DAppnZJ1UvfVcKai7jHaq4VswejRJxkQTTIK58
 
 ###
 GET  http://localhost:3000/api/calendar/categories HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTIxMzdkMy1lMGE2LTQ5YTQtODAzYi0yOTIwNmY4NjU3Y2QiLCJlbWFpbCI6Im9sZWdfb3Jsb3ZfMjAwNUBtYWlsLnJ1IiwiZXhwIjoxNzY0OTU5MjEwLCJpYXQiOjE3NjQ5NTIwMTB9.a_ugXYkAltF79-kwYzX-Q8lQ5FL7D1_Ik17n5RmYKVQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE0NTI4MSwiaWF0IjoxNzY1MTM4MDgxfQ.2Y2Q-DAppnZJ1UvfVcKai7jHaq4VswejRJxkQTTIK58
 
 ###
 POST  http://localhost:3000/api/calendar/categories HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTIxMzdkMy1lMGE2LTQ5YTQtODAzYi0yOTIwNmY4NjU3Y2QiLCJlbWFpbCI6Im9sZWdfb3Jsb3ZfMjAwNUBtYWlsLnJ1IiwiZXhwIjoxNzY0OTU5MjEwLCJpYXQiOjE3NjQ5NTIwMTB9.a_ugXYkAltF79-kwYzX-Q8lQ5FL7D1_Ik17n5RmYKVQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE0NTI4MSwiaWF0IjoxNzY1MTM4MDgxfQ.2Y2Q-DAppnZJ1UvfVcKai7jHaq4VswejRJxkQTTIK58
 Content-Type: application/json
 
 {
@@ -62,7 +50,7 @@ Content-Type: application/json
 
 ###
 PATCH  http://localhost:3000/api/calendar/categories/1b352b25-3148-4d02-8656-7f29a0b061a8 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTIxMzdkMy1lMGE2LTQ5YTQtODAzYi0yOTIwNmY4NjU3Y2QiLCJlbWFpbCI6Im9sZWdfb3Jsb3ZfMjAwNUBtYWlsLnJ1IiwiZXhwIjoxNzY0OTU5MjEwLCJpYXQiOjE3NjQ5NTIwMTB9.a_ugXYkAltF79-kwYzX-Q8lQ5FL7D1_Ik17n5RmYKVQ
+Authorization: Bearer ..
 Content-Type: application/json
 
 {
@@ -71,4 +59,4 @@ Content-Type: application/json
 
 ###
 DELETE  http://localhost:3000/api/calendar/categories/a192b969-2cc5-4cc4-857c-d817963f5fa1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYTIxMzdkMy1lMGE2LTQ5YTQtODAzYi0yOTIwNmY4NjU3Y2QiLCJlbWFpbCI6Im9sZWdfb3Jsb3ZfMjAwNUBtYWlsLnJ1IiwiZXhwIjoxNzY0OTU5MjEwLCJpYXQiOjE3NjQ5NTIwMTB9.a_ugXYkAltF79-kwYzX-Q8lQ5FL7D1_Ik17n5RmYKVQ
+Authorization: Bearer 

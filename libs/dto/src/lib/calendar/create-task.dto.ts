@@ -80,6 +80,10 @@ export namespace CreateTaskDto {
     @ValidateNested({ each: true })
     @Type(() => TaskShare)
     shares?: TaskShare[];
+
+    @IsOptional()
+    @IsString()
+    additionalSettings?: string;
   }
   export class Response implements ITaskViewModel {
     userId: string;

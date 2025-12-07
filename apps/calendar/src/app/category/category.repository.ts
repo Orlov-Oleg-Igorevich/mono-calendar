@@ -25,16 +25,21 @@ export class CategoryRepository {
 
   async getAllUserCategory(
     userId: string,
-  ): Promise<(ICategoryViewModel & Pick<IColorViewModel, 'color' | 'userId'>)[]> {
+  ): Promise<(ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[]> {
     const categories = await this.prismaService.getClient().categoryColor.findMany({
       where: { userId },
-      select: { category: { select: { id: true, name: true } }, userId: true, color: true },
+      select: { category: { select: { id: true, name: true } }, color: true },
     });
-    const returnCategories = categories.map((category) => ({
-      color: category.color,
-      userId: category.userId,
-      ...category.category,
-    }));
+    const returnCategories: (ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[] =
+      categories.map((category) => ({
+        color: category.color,
+        ...category.category,
+      }));
+    const defaultCategories = await this.prismaService.getClient().category.findMany({
+      where: { id: { notIn: returnCategories.map((category) => category.id) }, isSystem: true },
+      select: { id: true, name: true },
+    });
+    returnCategories.push(...defaultCategories);
     return returnCategories;
   }
 

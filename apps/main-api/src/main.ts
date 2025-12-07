@@ -11,10 +11,14 @@ import cookieParser from 'cookie-parser';
 import { config } from 'dotenv';
 import { resolve } from 'path';
 
-async function bootstrap() {
-  config({ path: resolve(__dirname, '../../../envs/.notification.env') });
+async function bootstrap(): Promise<void> {
+  config({ path: resolve(__dirname, '../../../envs/.main.env') });
 
   const app = await NestFactory.create(AppModule);
+  app.enableCors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  });
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.PORT || 3000;

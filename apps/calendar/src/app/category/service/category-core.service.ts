@@ -9,7 +9,7 @@ export class CategoryCoreService {
 
   async getCategories(
     userId: string,
-  ): Promise<(ICategoryViewModel & Pick<IColorViewModel, 'color' | 'userId'>)[]> {
+  ): Promise<(ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[]> {
     return this.categoryRepository.getAllUserCategory(userId);
   }
 

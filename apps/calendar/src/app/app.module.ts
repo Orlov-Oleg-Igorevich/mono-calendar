@@ -12,6 +12,7 @@ import { PublisherModule } from './publisher/publisher.module';
 import { MLModule } from './ML-client/ml.module';
 import { AlgorithmModule } from './algorithm-client/algorithm.module';
 import { AccountClientModule } from './account-client/account-client.module';
+import { CategorySeedService } from './seed/category.seed.service';
 
 @Module({
   imports: [
@@ -28,5 +29,6 @@ import { AccountClientModule } from './account-client/account-client.module';
     AlgorithmModule,
     AccountClientModule,
   ],
+  providers: [CategorySeedService],
 })
 export class AppModule {}

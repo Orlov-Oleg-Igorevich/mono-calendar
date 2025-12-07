@@ -77,18 +77,11 @@ export class TaskRepository {
           UPDATE "TaskCategory"
           SET "priority" = updates."priority"
           FROM (VALUES
-            ${join(categoryChanges.toPriorityChanges.map((u) => sql`(${task.id}, ${u.categoryId}, ${u.priority})`))}
+            ${join(categoryChanges.toPriorityChanges.map((u) => sql`(${task.id}, ${u.categoryId}, ${u.priority}::INTEGER)`))}
           ) AS updates("taskId", "categoryId", "priority")
           WHERE "TaskCategory"."taskId" = updates."taskId"
           AND "TaskCategory"."categoryId" = updates."categoryId"
         `;
-        await tx.taskCategory.updateMany({
-          data: categoryChanges.toPriorityChanges.map((category) => ({
-            taskId: task.id,
-            categoryId: category.categoryId,
-            priority: category.priority,
-          })),
-        });
       }
       const shareChanges = task.getSharesChanges();
       if (shareChanges.toRemove.length > 0) {
