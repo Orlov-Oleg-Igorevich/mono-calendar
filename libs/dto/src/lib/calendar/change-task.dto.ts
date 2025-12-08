@@ -57,10 +57,13 @@ export namespace ChangeTaskDto {
 
     @IsOptional()
     @Transform(({ value }) => {
+      if (value === new Date(0).toISOString()) {
+        return null;
+      }
       const date = new Date(value);
       return isNaN(date.getTime()) ? undefined : date;
     })
-    endDate?: Date;
+    endDate?: Date | null;
 
     @IsOptional()
     @IsString()

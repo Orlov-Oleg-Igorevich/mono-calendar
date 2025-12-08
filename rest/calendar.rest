@@ -25,8 +25,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzN
 Content-Type: application/json
 
 {
-  "categories": [{"categoryId": "fd9d5ed6-4e27-4c17-a966-f65a2443566c", "priority": 1}, {"categoryId": "e9254b3e-4a74-4ebd-ab74-199e6a9268a5", "priority": 2}]
-
+  "endDate": null
 }
 
 ###

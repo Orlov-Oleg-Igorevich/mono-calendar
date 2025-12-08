@@ -41,7 +41,7 @@ export class MLService {
       if (e instanceof Error) {
         this.logger.error(e.message);
       }
-      return { onTheStreet: false, categories: ['Прочее'] };
+      return { onTheStreet: false, categories: [] };
     }
   }
 }
