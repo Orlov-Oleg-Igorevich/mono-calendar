@@ -18,7 +18,10 @@ export class CategoryRepository {
     categories: ITaskCategory[],
   ): Promise<Pick<ICategory, 'id'>[]> {
     return this.prismaService.getClient().category.findMany({
-      where: { id: { in: categories.map((category) => category.categoryId) }, userId: userId },
+      where: {
+        id: { in: categories.map((category) => category.categoryId) },
+        OR: [{ userId: userId }, { userId: null }],
+      },
       select: { id: true },
     });
   }
@@ -130,15 +133,27 @@ export class CategoryRepository {
   async getCategories(
     userId: string,
     categoryIds: string[],
-  ): Promise<(ICategoryViewModel & Pick<IColorViewModel, 'color' | 'userId'>)[]> {
+  ): Promise<(ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[]> {
     const categories = await this.prismaService.getClient().categoryColor.findMany({
-      where: { userId, categoryId: { in: categoryIds } },
-      select: { userId: true, color: true, category: { select: { id: true, name: true } } },
+      where: { categoryId: { in: categoryIds }, userId },
+      select: { color: true, category: { select: { id: true, name: true } } },
     });
-    return categories.map((category) => ({
-      userId: category.userId,
-      color: category.color,
-      ...category.category,
-    }));
+    const defaultCategories = await this.prismaService.getClient().category.findMany({
+      where: {
+        AND: [
+          { id: { in: categoryIds } },
+          { id: { notIn: categories.map((category) => category.category.id) } },
+        ],
+        isSystem: true,
+      },
+      select: { id: true, name: true },
+    });
+    const returnCategories: (ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[] =
+      categories.map((category) => ({
+        color: category.color,
+        ...category.category,
+      }));
+    returnCategories.push(...defaultCategories);
+    return returnCategories;
   }
 }

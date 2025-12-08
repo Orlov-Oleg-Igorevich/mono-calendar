@@ -15,6 +15,6 @@ export namespace GetTaskDetailsDto {
   export class Response {
     task: ITask;
     users: IUserViewModel[];
-    categories: (ICategoryViewModel & Pick<IColorViewModel, 'color' | 'userId'>)[];
+    categories: (ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[];
   }
 }

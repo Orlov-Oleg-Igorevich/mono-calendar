@@ -202,7 +202,7 @@ export class TaskCoreService {
   async getTask(taskId: string): Promise<{
     task: ITask;
     users: IUserViewModel[];
-    categories: (ICategoryViewModel & Pick<IColorViewModel, 'color' | 'userId'>)[];
+    categories: (ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[];
   }> {
     const task = await this.taskRepository.getTask(taskId);
     if (!task) {

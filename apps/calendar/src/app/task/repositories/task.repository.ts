@@ -134,7 +134,7 @@ export class TaskRepository {
   async getCalendar(userId: string): Promise<{
     tasks: ITaskViewModel[];
     authors: IUserViewModel[];
-    categories: (ICategoryViewModel & Pick<IColorViewModel, 'color' | 'userId'>)[];
+    categories: (ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[];
   }> {
     const tasks = await this.prismaService.getClient().calendarView.findMany({
       where: { userId },
@@ -151,13 +151,30 @@ export class TaskRepository {
             .map((task) => task.category1Id as string),
         },
       },
-      select: { userId: true, color: true, category: { select: { id: true, name: true } } },
+      select: { color: true, category: { select: { id: true, name: true } } },
     });
-    const returnCategories = categories.map((category) => ({
-      color: category.color,
-      userId: category.userId,
-      ...category.category,
-    }));
+    const returnCategories: (ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[] =
+      categories.map((category) => ({
+        color: category.color,
+        ...category.category,
+      }));
+    const defaultCategories = await this.prismaService.getClient().category.findMany({
+      where: {
+        AND: [
+          {
+            id: {
+              in: tasks
+                .filter((task) => task.category1Id !== null)
+                .map((task) => task.category1Id as string),
+            },
+          },
+          { id: { notIn: categories.map((category) => category.category.id) } },
+        ],
+        isSystem: true,
+      },
+      select: { id: true, name: true },
+    });
+    returnCategories.push(...defaultCategories);
     return { tasks, authors, categories: returnCategories };
   }
 

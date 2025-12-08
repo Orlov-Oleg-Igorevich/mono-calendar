@@ -1,13 +1,13 @@
 GET http://localhost:3000/api/calendar HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE0NTI4MSwiaWF0IjoxNzY1MTM4MDgxfQ.2Y2Q-DAppnZJ1UvfVcKai7jHaq4VswejRJxkQTTIK58
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE5Njk5OSwiaWF0IjoxNzY1MTg5Nzk5fQ.FUcqpUh5pKgawiSHCZRac0D5IfiaaofZEY2y7abejuc
 
 ###
 GET http://localhost:3000/api/calendar/categories HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE0NTI4MSwiaWF0IjoxNzY1MTM4MDgxfQ.2Y2Q-DAppnZJ1UvfVcKai7jHaq4VswejRJxkQTTIK58
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE5Njk5OSwiaWF0IjoxNzY1MTg5Nzk5fQ.FUcqpUh5pKgawiSHCZRac0D5IfiaaofZEY2y7abejuc
 
 ###
 POST http://localhost:3000/api/calendar HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE0NTI4MSwiaWF0IjoxNzY1MTM4MDgxfQ.2Y2Q-DAppnZJ1UvfVcKai7jHaq4VswejRJxkQTTIK58
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE5Njk5OSwiaWF0IjoxNzY1MTg5Nzk5fQ.FUcqpUh5pKgawiSHCZRac0D5IfiaaofZEY2y7abejuc
 Content-Type: application/json
 
 {
@@ -16,17 +16,16 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:3000/api/calendar/f1a26b12-67f8-4266-ad45-f4b6e95002bc HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE0NTI4MSwiaWF0IjoxNzY1MTM4MDgxfQ.2Y2Q-DAppnZJ1UvfVcKai7jHaq4VswejRJxkQTTIK58
-
+GET http://localhost:3000/api/calendar/89e54a9a-d1a2-465c-8e8a-4e11d57442e5 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE5Njk5OSwiaWF0IjoxNzY1MTg5Nzk5fQ.FUcqpUh5pKgawiSHCZRac0D5IfiaaofZEY2y7abejuc
 
 ###
-PATCH http://localhost:3000/api/calendar/f1a26b12-67f8-4266-ad45-f4b6e95002bc HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE0NTI4MSwiaWF0IjoxNzY1MTM4MDgxfQ.2Y2Q-DAppnZJ1UvfVcKai7jHaq4VswejRJxkQTTIK58
+PATCH http://localhost:3000/api/calendar/89e54a9a-d1a2-465c-8e8a-4e11d57442e5 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMTAzY2EzNS02NWQ3LTQ4OGYtYWI5Zi1jZTAwMmFjYTdlMWQiLCJlbWFpbCI6IjExMzIyMzM0OTVAcGZ1ci5ydSIsImV4cCI6MTc2NTE5Njk5OSwiaWF0IjoxNzY1MTg5Nzk5fQ.FUcqpUh5pKgawiSHCZRac0D5IfiaaofZEY2y7abejuc
 Content-Type: application/json
 
 {
-  "categories": [{"categoryId": "fd9d5ed6-4e27-4c17-a966-f65a2443566c", "priority": 2}]
+  "categories": [{"categoryId": "fd9d5ed6-4e27-4c17-a966-f65a2443566c", "priority": 1}, {"categoryId": "e9254b3e-4a74-4ebd-ab74-199e6a9268a5", "priority": 2}]
 
 }
 

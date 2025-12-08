@@ -15,6 +15,6 @@ export namespace GetCalendarDto {
   export class Response {
     tasks: ITaskViewModel[];
     authors: IUserViewModel[];
-    categories: (ICategoryViewModel & Pick<IColorViewModel, 'color' | 'userId'>)[];
+    categories: (ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[];
   }
 }
