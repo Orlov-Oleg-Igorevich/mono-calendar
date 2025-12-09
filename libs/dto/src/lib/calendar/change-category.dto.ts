@@ -14,5 +14,6 @@ export namespace ChangeCategoryDto {
     id: string;
     name: string;
     color: string;
+    isSystem: boolean;
   }
 }

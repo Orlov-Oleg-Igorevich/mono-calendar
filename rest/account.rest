@@ -12,7 +12,7 @@ POST http://localhost:3000/api/account/confirm-email HTTP/1.1
 Content-Type: application/json
 
 {
-  "token": "3d58219de34ade81b319285af16352ce560fe07748bd1854fe94dfddf509917f"
+  "token": "5e13ca8636c2422797a17fb8e256136ad76ad654684f75f93f23105aefe1f3bb"
 }
 
 ###

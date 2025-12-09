@@ -151,7 +151,7 @@ export class TaskRepository {
             .map((task) => task.category1Id as string),
         },
       },
-      select: { color: true, category: { select: { id: true, name: true } } },
+      select: { color: true, category: { select: { id: true, name: true, isSystem: true } } },
     });
     const returnCategories: (ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[] =
       categories.map((category) => ({
@@ -172,7 +172,7 @@ export class TaskRepository {
         ],
         isSystem: true,
       },
-      select: { id: true, name: true },
+      select: { id: true, name: true, isSystem: true },
     });
     returnCategories.push(...defaultCategories);
     return { tasks, authors, categories: returnCategories };

@@ -2,6 +2,7 @@ import { MLCalculateCategories, MLCalculateTime } from '@mono-calendar/contracts
 import { Injectable, Logger } from '@nestjs/common';
 import { RMQService } from 'nestjs-rmq';
 import { TypedConfigService } from '../common/typed-config/typed-config.service';
+import validateAndTransform from '../common/validate-transform.function';
 
 @Injectable()
 export class MLService {
@@ -14,11 +15,13 @@ export class MLService {
 
   async calculateTime(userInput: string, categories: string[]): Promise<MLCalculateTime.Response> {
     try {
-      return await this.rmqService.send<MLCalculateTime.Request, MLCalculateTime.Response>(
+      const res = await this.rmqService.send<MLCalculateTime.Request, MLCalculateTime.Response>(
         MLCalculateTime.topic,
         { userInput, categories },
         { timeout: this.configService.MLServiceTimeout },
       );
+      const validRes = await validateAndTransform(res, MLCalculateCategories.Response);
+      return validRes;
     } catch (e) {
       if (e instanceof Error) {
         this.logger.error(e.message);
@@ -29,7 +32,7 @@ export class MLService {
 
   async calculateCategories(userInput: string): Promise<MLCalculateCategories.Response> {
     try {
-      return await this.rmqService.send<
+      const res = await this.rmqService.send<
         MLCalculateCategories.Request,
         MLCalculateCategories.Response
       >(
@@ -37,6 +40,8 @@ export class MLService {
         { userInput },
         { timeout: this.configService.MLServiceTimeout },
       );
+      const validRes = await validateAndTransform(res, MLCalculateCategories.Response);
+      return validRes;
     } catch (e) {
       if (e instanceof Error) {
         this.logger.error(e.message);

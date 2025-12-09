@@ -2,6 +2,7 @@ import { AlgorithmCalculateTime } from '@mono-calendar/contracts';
 import { Injectable, Logger } from '@nestjs/common';
 import { RMQService } from 'nestjs-rmq';
 import { TypedConfigService } from '../common/typed-config/typed-config.service';
+import validateAndTransform from '../common/validate-transform.function';
 
 @Injectable()
 export class AlgorithmService {
@@ -16,12 +17,14 @@ export class AlgorithmService {
     payload: AlgorithmCalculateTime.Request,
   ): Promise<AlgorithmCalculateTime.Response | null> {
     try {
-      return await this.rmqService.send<
+      const response = await this.rmqService.send<
         AlgorithmCalculateTime.Request,
         AlgorithmCalculateTime.Response
       >(AlgorithmCalculateTime.topic, payload, {
         timeout: this.configService.AlgorithmServiceTimeout,
       });
+      const validResponse = await validateAndTransform(response, AlgorithmCalculateTime.Response);
+      return validResponse;
     } catch (e) {
       if (e instanceof Error) {
         this.logger.error(e.message);

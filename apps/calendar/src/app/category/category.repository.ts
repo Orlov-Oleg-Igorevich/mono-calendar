@@ -31,7 +31,7 @@ export class CategoryRepository {
   ): Promise<(ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[]> {
     const categories = await this.prismaService.getClient().categoryColor.findMany({
       where: { userId },
-      select: { category: { select: { id: true, name: true } }, color: true },
+      select: { category: { select: { id: true, name: true, isSystem: true } }, color: true },
     });
     const returnCategories: (ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[] =
       categories.map((category) => ({
@@ -40,7 +40,7 @@ export class CategoryRepository {
       }));
     const defaultCategories = await this.prismaService.getClient().category.findMany({
       where: { id: { notIn: returnCategories.map((category) => category.id) }, isSystem: true },
-      select: { id: true, name: true },
+      select: { id: true, name: true, isSystem: true },
     });
     returnCategories.push(...defaultCategories);
     return returnCategories;
@@ -53,7 +53,7 @@ export class CategoryRepository {
     return this.prismaService.getClient().$transaction(async (tx) => {
       const newCategory = await tx.category.create({
         data: { userId, isSystem: false, name: data.name },
-        select: { name: true, id: true },
+        select: { name: true, id: true, isSystem: true },
       });
       const newColor = await tx.categoryColor.create({
         data: { userId, color: data.color, categoryId: newCategory.id },
@@ -82,7 +82,11 @@ export class CategoryRepository {
         where: { userId_categoryId: { userId, categoryId } },
         update: data,
         create: { ...data, userId: userId, categoryId: categoryId },
-        select: { userId: true, color: true, category: { select: { id: true, name: true } } },
+        select: {
+          userId: true,
+          color: true,
+          category: { select: { id: true, name: true, isSystem: true } },
+        },
       });
       return {
         color: updatedCategory.color,
@@ -95,17 +99,19 @@ export class CategoryRepository {
   async deleteCategory(userId: string, categoryId: string): Promise<number> {
     return this.prismaService.getClient().$transaction(async (tx) => {
       const category = await tx.category.findUnique({
-        where: { id: categoryId, userId },
+        where: { id: categoryId, OR: [{ userId }, { userId: null }] },
       });
       if (!category) {
         throw new BadRequestException(CATEGORY_NOT_FOUND_ERROR);
       }
-      await tx.taskCategory.deleteMany({ where: { categoryId: categoryId } });
-      await tx.categoryColor.deleteMany({ where: { categoryId: categoryId } });
-      const result = await tx.category.deleteMany({ where: { id: categoryId, userId } });
+      const result = await tx.categoryColor.deleteMany({
+        where: { categoryId: categoryId, userId },
+      });
       if (result.count === 0) {
         return 0;
       }
+      await tx.taskCategory.deleteMany({ where: { categoryId: categoryId } });
+      await tx.category.deleteMany({ where: { id: categoryId, userId } });
       await tx.outboxEvent.create({
         data: { topic: DeleteCategoryEvent.topic, payload: { categoryId } },
       });
@@ -136,7 +142,7 @@ export class CategoryRepository {
   ): Promise<(ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[]> {
     const categories = await this.prismaService.getClient().categoryColor.findMany({
       where: { categoryId: { in: categoryIds }, userId },
-      select: { color: true, category: { select: { id: true, name: true } } },
+      select: { color: true, category: { select: { id: true, name: true, isSystem: true } } },
     });
     const defaultCategories = await this.prismaService.getClient().category.findMany({
       where: {
@@ -146,7 +152,7 @@ export class CategoryRepository {
         ],
         isSystem: true,
       },
-      select: { id: true, name: true },
+      select: { id: true, name: true, isSystem: true },
     });
     const returnCategories: (ICategoryViewModel & Partial<Pick<IColorViewModel, 'color'>>)[] =
       categories.map((category) => ({
