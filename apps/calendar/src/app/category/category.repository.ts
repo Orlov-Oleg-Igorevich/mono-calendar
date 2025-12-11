@@ -110,7 +110,9 @@ export class CategoryRepository {
       if (result.count === 0) {
         return 0;
       }
-      await tx.taskCategory.deleteMany({ where: { categoryId: categoryId } });
+      if (category.isSystem === false) {
+        await tx.taskCategory.deleteMany({ where: { categoryId: categoryId } });
+      }
       await tx.category.deleteMany({ where: { id: categoryId, userId } });
       await tx.outboxEvent.create({
         data: { topic: DeleteCategoryEvent.topic, payload: { categoryId } },
